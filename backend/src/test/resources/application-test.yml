@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:subs;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+
+# Los tests siempre usan la pasarela demo, aunque exista backend/.env con credenciales reales.
+app:
+  mercadopago:
+    access-token: ""
+    webhook-secret: ""
+    back-url: https://www.mercadopago.com.ar
+  jobs:
+    cron: "-"
+    sync-cron: "-"

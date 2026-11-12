@@ -1,0 +1,36 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: subs-backend
+  # Credenciales locales (MP_ACCESS_TOKEN, MP_WEBHOOK_SECRET, ...) en backend/.env, ignorado por git.
+  config:
+    import: optional:file:.env[.properties]
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/subs}
+    username: ${DB_USER:subs}
+    password: ${DB_PASSWORD:subs}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+  flyway:
+    enabled: true
+
+app:
+  timezone: America/Argentina/Buenos_Aires
+  mercadopago:
+    # Sin access token el backend arranca en "modo demo" (pasarela simulada).
+    access-token: ${MP_ACCESS_TOKEN:}
+    base-url: ${MP_BASE_URL:https://api.mercadopago.com}
+    # Clave secreta de Webhooks (Tus integraciones > Webhooks). Si esta vacia no se valida x-signature.
+    webhook-secret: ${MP_WEBHOOK_SECRET:}
+    # MP exige una URL https publica como back_url.
+    back-url: ${MP_BACK_URL:https://www.mercadopago.com.ar}
+    currency: ARS
+  jobs:
+    # Todos los dias a las 03:00: bajas programadas y fin de promociones.
+    cron: "0 0 3 * * *"
+    # Solo con Mercado Pago real: trae estado de planes y suscripciones (respaldo del webhook).
+    sync-cron: "0 */5 * * * *"

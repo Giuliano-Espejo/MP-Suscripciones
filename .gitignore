@@ -1,0 +1,18 @@
+# credenciales
+.env
+*.env.local
+
+# backend
+backend/build/
+backend/.gradle/
+backend/bin/
+*.log
+
+# frontend
+frontend/node_modules/
+frontend/dist/
+
+# IDE
+.idea/
+.vscode/
+*.iml

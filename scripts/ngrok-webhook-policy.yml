@@ -1,0 +1,10 @@
+# Politica de trafico de ngrok: expone SOLO el webhook de Mercado Pago.
+# El resto de la API (sin login) queda inaccesible desde internet.
+# Uso: ngrok http 8080 --traffic-policy-file=scripts/ngrok-webhook-policy.yml
+on_http_request:
+  - expressions:
+      - "!(req.method == 'POST' && req.url.path == '/api/webhooks/mercadopago')"
+    actions:
+      - type: deny
+        config:
+          status_code: 404
